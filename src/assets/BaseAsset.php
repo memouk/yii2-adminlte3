@@ -1,6 +1,6 @@
 <?php
 
-namespace hail812\adminlte3\assets;
+namespace memouk\adminlte3\assets;
 
 use yii\web\AssetBundle;
 
