@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace hail812\adminlte3\yii\grid;
+namespace memouk\adminlte3\yii\grid;
 
 use Yii;
 use yii\helpers\Html;
