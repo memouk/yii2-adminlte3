@@ -25,7 +25,7 @@ $this->registerCssFile('https://code.ionicframework.com/ionicons/2.0.1/css/ionic
 <?php  $this->beginBody() ?>
 <div class="row login-box justify-content-center">
     <div class="login-logo">
-        <?= Html::img('@web/imgs/logo-cargranel.png', ['alt'=>'Cargranel',"height"=>"200", "width"=>"500"]);?>
+        <?= Html::img('@web/imgs/logo-cargranel.png', ['alt'=>'Cargranel',"height"=>"120"]);?>
 <!--        <a href="<?=Yii::$app->homeUrl?>"><b>Admin</b>LTE</a>-->
     </div>
 </div>
