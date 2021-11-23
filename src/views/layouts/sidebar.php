@@ -121,7 +121,7 @@ function arbolmenu($idpadre) {
             <?php
         } else {
 
-            if ($authtip["child"] != "") {
+            if (isset($authtip["child"])) {
                 ?>
 
                 <li class="nav-item"><a class="nav-link " href="<?php echo Yii::$app->homeUrl ?><?php echo $record->route ?>"><i class="<?php echo $record->icono != NULL ? $record->icono : "nav-icon fas fa-th" ?>" ></i> <p><?php echo $record->name ?></p></a></li>
