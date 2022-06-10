@@ -25,6 +25,8 @@ use yii\helpers\Html;
             ->passwordInput(['placeholder' => $model->getAttributeLabel('Contraseña')]) ?>
 
         <div class="row justify-content-center">
+            
+        <?= $form->field($model, 'reCaptcha')->widget(\himiklab\yii2\recaptcha\ReCaptcha::className()) ?>
 <!--            <div class="col-8">
                 <? $form->field($model, 'rememberMe')->checkbox([
                     'template' => '<div class="icheck-primary">{input}{label}</div>',

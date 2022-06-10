@@ -155,17 +155,17 @@ use yii\helpers\Html;
         </li>
         <li class="nav-item dropdown user-menu">
             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-                <img src="<?=$assetDir?>/img/user2-160x160.jpg" class="user-image img-circle elevation-2" alt="User Image">
+                <img src="<?=Yii::$app->homeUrl?>/../image/users/1.jpg" class="user-image img-circle elevation-2" alt="User Image">
                 <span class="d-none d-md-inline"><?php echo yii::$app->user->identity->username ?></span>
             </a>
             <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                 <!-- User image -->
-                <li class="user-header bg-primary">
-                    <img src="<?=$assetDir?>/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                <li class="user-header bg-dark">
+                    <img src="<?=Yii::$app->homeUrl?>/../image/users/1.jpg" class="img-circle elevation-2" alt="User Image">
 
                     <p>
-                        <?php echo yii::$app->user->identity->username ?> - Web Developer
-                        <small>Member since Nov. 2012</small>
+                        <?php echo yii::$app->user->identity->username ?>
+<!--                        <small>Member since Nov. 2012</small>-->
                     </p>
                 </li>
                 <!-- Menu Body -->
