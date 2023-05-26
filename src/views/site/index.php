@@ -1,79 +1,97 @@
 <?php
 
 use dosamigos\chartjs\ChartJs;
+use yii\helpers\Html;
 
-$this->title = 'DashBoard';
+$this->title = $tipo=='administrador' ? 'DashBoard' : "Bienvenidos a Cargranel";
 $this->params['breadcrumbs'] = [['label' => $this->title]];
 ?>
 <div class="container-fluid">
-
+<?php if($tipo=="administrador") {?>
     <div class="row">
-        <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-info">
+        <div class="col-md-4">
+            <div class="small-box bg-danger">
                 <div class="inner">
-                    <h3><?php
-                        echo backend\models\OrdenProduccion::find()->where("estado=1")->count();
-                        ?></h3>
-
-                    <p>Ordenes De Produccion Activas</p>
+                    <h3><?php echo "$ ". number_format($dashboard['pendientexfacturar']['total_pendiente'], 2, '.', ',')?></h3>
+                    <p>Total Pendiente por Facturar</p>
+                    <h3><?php echo $dashboard['pendientexfacturar']['remesas_pendiente']?></h3>
+                    <p>Remesas Pendientes por Facturar</p>
                 </div>
                 <div class="icon">
                     <i class="nav-icon fas fa-bag"></i>
                 </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-6">
+        <div class="col-md-4">
+            <!-- small box -->
+            <div class="small-box bg-info">
+                <div class="inner">
+                    <h3><?php echo "$ ".number_format($dashboard['dia']['anticipos']['total'], 2, '.', ',');?></sup></h3>
+                    <p>Total Anticipos del Dia</p>
+                    <h3><?php echo $dashboard['dia']['anticipos']['generados']?></sup></h3>
+                    <p>Anticipos Generados del Dia</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-stats-bars"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <!-- small box -->
+            <div class="small-box bg-warning">
+                <div class="inner">
+                    <h3><?php echo "$ ".number_format($dashboard['dia']['pendientexliquidar']['total_pendiente'], 2, '.', ',');?></sup></h3>
+                    <p>Total Pendiente por Liquidar Dia</p>
+                    <h3><?php echo $dashboard['dia']['pendientexliquidar']['manifiestos_pendiente']?></sup></h3>
+                    <p>Manifiestos Pendientes por Liquidar Dia</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-stats-bars"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
             <!-- small box -->
             <div class="small-box bg-success">
                 <div class="inner">
-                    <h3><?php echo backend\models\Manifiestos::find()->where("fecha_creacion>='" . date("Y-m") . "-01'")->count() ?><sup style="font-size: 20px"></sup></h3>
+                    <h3><?php echo "$ ".number_format($dashboard['dia']['facturado'], 2, '.', ',');?></sup></h3>
+                    <p>Total Facturado del Dia</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-stats-bars"></i>
+                </div>
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-md-4">
+            <!-- small box -->
+            <div class="small-box bg-success">
+                <div class="inner">
+                    <h3><?php echo Yii::$app->db->createCommand("SELECT count(*) from manifiestos where date_format(fecha_creacion, '%Y%m')>=date_format(now(), '%Y%m')")->queryScalar(); ?><sup style="font-size: 20px"></sup></h3>
 
                     <p>Total Manifiestos Creados este mes</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-stats-bars"></i>
                 </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
         <!-- ./col -->
-        <div class="col-lg-3 col-6">
+        <div class="col-md-4">
             <!-- small box -->
             <div class="small-box bg-warning">
                 <div class="inner">
-                    <h3><?php
-                        $sql = "select count(id) as total from manifiestos WHERE estado!=-1 and date(fecha_creacion)>='2022-01-01' and manifiesto NOT IN (SELECT manifiesto FROM cumplidos )";
-                        $pendcumpli = Yii::$app->db->createCommand($sql)->queryOne();
-
-                        echo $pendcumpli["total"];
-                        ?></h3>
+                    <h3><?= Yii::$app->db->createCommand("SELECT count(*) from manifiestos WHERE estado!=-1 and date(fecha_creacion)>='2023-01-01' and manifiesto NOT IN (SELECT manifiesto FROM cumplidos)")->queryScalar();?></h3>
 
                     <p>Manifiestos pendientes x cumplir</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-person-add"></i>
                 </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
         <!-- ./col -->
-        <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-danger">
-                <div class="inner">
-                    <h3>65</h3>
-
-                    <p>Remesas Pendientes x Facturar</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-pie-graph"></i>
-                </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-        </div>
+        
         <!-- ./col -->
     </div>
 
@@ -103,40 +121,39 @@ $this->params['breadcrumbs'] = [['label' => $this->title]];
                     <div class="tab-content p-0">
                         <!-- Morris chart - Sales -->
                         <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 320px;"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-<?=
-ChartJs::widget([
-    'type' => 'line',
-    'options' => [
-        'height' => 120,
-        'width' => 280
-    ],
-    'data' => [
-        'labels' => ["January", "February", "March", "April", "May", "June", "July"],
-        'datasets' => [
-            [
-                'label' => "Liquidaciones",
-                'backgroundColor' => "rgba(179,181,198,0.2)",
-                'borderColor' => "rgba(179,181,198,1)",
-                'pointBackgroundColor' => "rgba(179,181,198,1)",
-                'pointBorderColor' => "#fff",
-                'pointHoverBackgroundColor' => "#fff",
-                'pointHoverBorderColor' => "rgba(179,181,198,1)",
-                'data' => [65, 59, 90, 81, 56, 55, 40]
-            ],
-            [
-                'label' => "Facturación",
-                'backgroundColor' => "rgba(255,99,132,0.2)",
-                'borderColor' => "rgba(255,99,132,1)",
-                'pointBackgroundColor' => "rgba(255,99,132,1)",
-                'pointBorderColor' => "#fff",
-                'pointHoverBackgroundColor' => "#fff",
-                'pointHoverBorderColor' => "rgba(255,99,132,1)",
-                'data' => [28, 48, 40, 19, 96, 27, 100]
-            ]
-        ]
-    ]
-]);
-?>  
+                            <?=ChartJs::widget([
+                                'type' => 'line',
+                                'options' => [
+                                    'height' => 120,
+                                    'width' => 280
+                                ],
+                                'data' => [
+                                    'labels' => ["January", "February", "March", "April", "May", "June", "July"],
+                                    'datasets' => [
+                                        [
+                                            'label' => "Liquidaciones",
+                                            'backgroundColor' => "rgba(179,181,198,0.2)",
+                                            'borderColor' => "rgba(179,181,198,1)",
+                                            'pointBackgroundColor' => "rgba(179,181,198,1)",
+                                            'pointBorderColor' => "#fff",
+                                            'pointHoverBackgroundColor' => "#fff",
+                                            'pointHoverBorderColor' => "rgba(179,181,198,1)",
+                                            'data' => [65, 59, 90, 81, 56, 55, 40]
+                                        ],
+                                        [
+                                            'label' => "Facturación",
+                                            'backgroundColor' => "rgba(255,99,132,0.2)",
+                                            'borderColor' => "rgba(255,99,132,1)",
+                                            'pointBackgroundColor' => "rgba(255,99,132,1)",
+                                            'pointBorderColor' => "#fff",
+                                            'pointHoverBackgroundColor' => "#fff",
+                                            'pointHoverBorderColor' => "rgba(255,99,132,1)",
+                                            'data' => [28, 48, 40, 19, 96, 27, 100]
+                                        ]
+                                    ]
+                                ]
+                            ]);
+                        ?>  
                         </div>
                         <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;">
 
@@ -205,7 +222,14 @@ ChartJs::widget([
         </section>
         <!-- right col -->
     </div>
-
-
+<?php } else { ?>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12" align="center">
+                <?=Html::img(Yii::getAlias('@web').'/imgs/logo-cargranel.png', ['alt' => 'Cargranel', 'class'=>'img-fluid']);?>
+            </div>
+        </div>
+    </div>
+<?php } ?>
 
 </div>
