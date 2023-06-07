@@ -3,7 +3,7 @@
 use dosamigos\chartjs\ChartJs;
 use yii\helpers\Html;
 
-$this->title = $tipo=='administrador' ? 'DashBoard' : "Bienvenidos a Cargranel";
+$this->title = $tipo=='administrador' ? 'DashBoard' : "Bienvenidos a Cargranel (SID";
 $this->params['breadcrumbs'] = [['label' => $this->title]];
 ?>
 
