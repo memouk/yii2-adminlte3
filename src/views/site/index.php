@@ -14,7 +14,7 @@ $this->params['breadcrumbs'] = [['label' => $this->title]];
             <div class="small-box bg-danger">
                 <div class="inner">
                     <h3><?php echo "$ ". number_format($dashboard['pendientexfacturar']['total_pendiente'], 2, '.', ',')?></h3>
-                    <p>Total Pendiente por Facturar</p>
+                    <p>Total Pendiente por Facturar (Mes)</p>
                     <h3><?php echo $dashboard['pendientexfacturar']['remesas_pendiente']?></h3>
                     <p>Remesas Pendientes por Facturar</p>
                 </div>
@@ -66,6 +66,19 @@ $this->params['breadcrumbs'] = [['label' => $this->title]];
         <!-- ./col -->
         <div class="col-md-4">
             <!-- small box -->
+            <div class="small-box bg-warning">
+                <div class="inner">
+                    <h3><?= Yii::$app->db->createCommand("SELECT count(*) from manifiestos WHERE estado!=-1 and date(fecha_creacion)>='2023-01-01' and manifiesto NOT IN (SELECT manifiesto FROM cumplidos)")->queryScalar();?></h3>
+
+                    <p>Manifiestos pendientes x cumplir</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-person-add"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <!-- small box -->
             <div class="small-box bg-success">
                 <div class="inner">
                     <h3><?php echo Yii::$app->db->createCommand("SELECT count(*) from manifiestos where date_format(fecha_creacion, '%Y%m')>=date_format(now(), '%Y%m')")->queryScalar(); ?><sup style="font-size: 20px"></sup></h3>
@@ -78,22 +91,38 @@ $this->params['breadcrumbs'] = [['label' => $this->title]];
             </div>
         </div>
         <!-- ./col -->
-        <div class="col-md-4">
-            <!-- small box -->
-            <div class="small-box bg-warning">
-                <div class="inner">
-                    <h3><?= Yii::$app->db->createCommand("SELECT count(*) from manifiestos WHERE estado!=-1 and date(fecha_creacion)>='2023-01-01' and manifiesto NOT IN (SELECT manifiesto FROM cumplidos)")->queryScalar();?></h3>
-
-                    <p>Manifiestos pendientes x cumplir</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-person-add"></i>
-                </div>
-            </div>
-        </div>
+        
         <!-- ./col -->
         
         <!-- ./col -->
+    </div>
+    <p>Clientes con Mayor Facturacion (Mes) </p>
+    <div class="row">
+        <div class="col-md-2">
+            <div class="alert alert-primary" role="alert">
+                <p style="font-size: 12px;"><?php echo $dashboard['mes']['topclientes'][0]['cliente'].": "."<br><b>$ ".number_format($dashboard['mes']['topclientes'][0]['total'], 2, '.', ',')."</b>";?></p>
+            </div>  
+        </div>
+        <div class="col-md-3">
+            <div class="alert alert-secondary" role="alert">
+                <p style="font-size: 12px;"><?php echo $dashboard['mes']['topclientes'][1]['cliente'].": "."<br><b>$ ".number_format($dashboard['mes']['topclientes'][1]['total'], 2, '.', ',')."</b>";?></p>
+            </div>  
+        </div>
+        <div class="col-md-2">
+            <div class="alert alert-success" role="alert">
+                <p style="font-size: 12px;"><?php echo $dashboard['mes']['topclientes'][2]['cliente'].": "."<br><b>$ ".number_format($dashboard['mes']['topclientes'][2]['total'], 2, '.', ',')."</b>";?></p>
+            </div>  
+        </div>
+        <div class="col-md-2">
+            <div class="alert alert-info" role="alert">
+                <p style="font-size: 12px;"><?php echo $dashboard['mes']['topclientes'][3]['cliente'].": "."<br><b>$ ".number_format($dashboard['mes']['topclientes'][3]['total'], 2, '.', ',')."</b>";?></p>
+            </div>  
+        </div>
+        <div class="col-md-2">
+            <div class="alert alert-dark" role="alert">
+                <p style="font-size: 12px;"><?php echo $dashboard['mes']['topclientes'][4]['cliente'].": "."<br><b>$ ".number_format($dashboard['mes']['topclientes'][4]['total'], 2, '.', ',')."</b>";?></p>
+            </div>  
+        </div>
     </div>
 <?php } else { ?>
     <div class="container">
