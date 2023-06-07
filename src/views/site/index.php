@@ -13,9 +13,9 @@ $this->params['breadcrumbs'] = [['label' => $this->title]];
         <div class="col-md-4">
             <div class="small-box bg-danger">
                 <div class="inner">
-                    <h3><?php echo "$ ". number_format($dashboard['pendientexfacturar']['total_pendiente'], 2, '.', ',')?></h3>
+                    <h3><?php echo "$ ". number_format($dashboard['mes']['xfacturar']['total_pendiente'], 2, '.', ',')?></h3>
                     <p>Total Pendiente por Facturar (Mes)</p>
-                    <h3><?php echo $dashboard['pendientexfacturar']['remesas_pendiente']?></h3>
+                    <h3><?php echo $dashboard['mes']['xfacturar']['remesas_pendiente']?></h3>
                     <p>Remesas Pendientes por Facturar</p>
                 </div>
                 <div class="icon">
