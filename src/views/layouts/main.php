@@ -10,6 +10,20 @@ use yii\helpers\Html;
 $this->registerCssFile('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700');
 
 $assetDir = Yii::$app->assetManager->getPublishedUrl('@vendor/almasaeed2010/adminlte/dist');
+
+
+if(yii::$app->user->identity->cambio_pass==1 && Yii::$app->controller->action->id!="password" && Yii::$app->controller->id!="user")
+{
+   $redirectUrl = yii\helpers\Url::to(['user/password']); 
+   
+   //echo $redirectUrl;
+   
+   echo '<script type="text/javascript">
+    window.location.href = "'.$redirectUrl.'";
+   </script>';
+}
+
+
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
