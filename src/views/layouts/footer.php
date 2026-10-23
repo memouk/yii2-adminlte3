@@ -4,5 +4,5 @@
         
     </div>
     <!-- Default to the left -->
-    <strong>Copyright &copy; <?php echo date("Y") ?> <a href="http://gosolutions.co">Go Solutions S.A.S</a>.</strong> All rights reserved.
+    <strong>Copyright &copy; <?php echo date("Y") ?> <a href="http://www.cargranel.com">Cargranel S.A.S</a>.</strong> All rights reserved.
 </footer>
